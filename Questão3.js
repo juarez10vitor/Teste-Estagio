@@ -1,23 +1,51 @@
-const faturamentoDiario = [100, 200, 150, 300, 250, 400, 350, 220, 180, 500, 450, 300, 220, 210, 190, 250, 275, 300, 400, 350, 280, 320]; 
+const fs = require('fs');
 
-let menorFaturamento = faturamentoDiario[0];
-let maiorFaturamento = faturamentoDiario[0];
-let somaFaturamento = 0;
-let diasAcimaMedia = 0;
+fs.readFile('faturamento.json', 'utf8', (err, data) => {
+    if (err) {
+        console.error('Erro ao ler o arquivo JSON:', err);
+        return;
+    }
 
-for (let i = 0; i < faturamentoDiario.length; i++) {
-    const valor = faturamentoDiario[i];
-    if (valor < menorFaturamento) menorFaturamento = valor;
-    if (valor > maiorFaturamento) maiorFaturamento = valor;
-    somaFaturamento += valor;
-}
+    const faturamentoDiario = JSON.parse(data);
 
-const mediaMensal = somaFaturamento / faturamentoDiario.length;
+    let menorFaturamento = Infinity;
+    let maiorFaturamento = -Infinity;
+    let somaFaturamento = 0;
+    let diasComFaturamento = 0;
 
-for (let i = 0; i < faturamentoDiario.length; i++) {
-    if (faturamentoDiario[i] > mediaMensal) diasAcimaMedia++;
-}
+    for (const item of faturamentoDiario) {
+        const valor = item.faturamento;
+        if (valor != null && valor > 0) {
+            if (valor < menorFaturamento) menorFaturamento = valor;
+            if (valor > maiorFaturamento) maiorFaturamento = valor;
+            somaFaturamento += valor;
+            diasComFaturamento++;
+        }
+    }
 
-console.log(`Menor valor de faturamento: ${menorFaturamento}`);
-console.log(`Maior valor de faturamento: ${maiorFaturamento}`);
-console.log(`Número de dias com faturamento acima da média mensal: ${diasAcimaMedia}`);
+    const mediaMensal = somaFaturamento / diasComFaturamento;
+
+    let diasAcimaMedia = 0;
+    for (const item of faturamentoDiario) {
+        const valor = item.faturamento;
+        if (valor != null && valor > mediaMensal) {
+            diasAcimaMedia++;
+        }
+    }
+
+    console.log(`Menor valor de faturamento: ${menorFaturamento}`);
+    console.log(`Maior valor de faturamento: ${maiorFaturamento}`);
+    console.log(`Número de dias com faturamento acima da média mensal: ${diasAcimaMedia}`);
+});
+
+//Dados em json
+[
+  {"dia": 1, "faturamento": 100},
+  {"dia": 2, "faturamento": 200},
+  {"dia": 3, "faturamento": 0},
+  {"dia": 4, "faturamento": 300},
+  {"dia": 5, "faturamento": 250},
+  {"dia": 6, "faturamento": null},
+  {"dia": 7, "faturamento": 400}
+]
+
