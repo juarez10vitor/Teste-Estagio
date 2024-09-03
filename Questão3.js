@@ -38,14 +38,4 @@ fs.readFile('faturamento.json', 'utf8', (err, data) => {
     console.log(`Número de dias com faturamento acima da média mensal: ${diasAcimaMedia}`);
 });
 
-//Dados em json
-[
-  {"dia": 1, "faturamento": 100},
-  {"dia": 2, "faturamento": 200},
-  {"dia": 3, "faturamento": 0},
-  {"dia": 4, "faturamento": 300},
-  {"dia": 5, "faturamento": 250},
-  {"dia": 6, "faturamento": null},
-  {"dia": 7, "faturamento": 400}
-]
 
