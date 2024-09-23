@@ -1,29 +1,17 @@
+let minhaString = "Laranja";
+let vogal = "a";
+let contador = 0 // recebimento de dados
 
-const numero = 21; 
+function verificar(vogal){ // função onde recebe o nome de verificar e o parametro vogal 
 
-
-let a = 0;
-let b = 1;
-let pertence = false;
-
-if (numero === a || numero === b) {
-    pertence = true;
-} else {
-
-    let c = a + b;
-    while (c <= numero) {
-        if (c === numero) {
-            pertence = true;
-            break;
-        }
-        
-        a = b;
-        b = c;
-        c = a + b;
+    for (let i = 0; i < minhaString.length; i++) { //itera sobre cada elemento da string    
+        if(minhaString[i] == vogal) { //verifica se a string apresenta a letra informada 
+            contador++;//cada vez que itera sobre a string e encontra a vogal é incrementado na variavel contador 
+        } 
     }
+    return contador
 }
 
-if (pertence) {
-    console.log(`${numero} pertence à sequência de Fibonacci.`);
-} else {
-    console.log(`${numero} não pertence à sequência de Fibonacci.`);
+let quantidade = verificar(vogal) //Chamando a função 
+console.log(`A vogal ${vogal} aparece ${quantidade} vezes na string`)// imprime mensagem dizendo letra presente e quantidade de vezes 
+
